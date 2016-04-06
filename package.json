@@ -61,7 +61,8 @@
       "underscore": "github:jashkenas/underscore/1.7.0",
       "backbone": "github:jashkenas/backbone/1.1.2",
       "bootstrap-combobox": "github:danielfarrell/bootstrap-combobox/1.1.6",
-      "FileSaver": "github:eligrey/FileSaver.js/master"
+      "FileSaver": "github:eligrey/FileSaver.js/master",
+      "mousetrap": "github:ccampbell/mousetrap/1.5.3"
     }
   }
 }
