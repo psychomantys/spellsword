@@ -3,22 +3,64 @@ define(['Matter'],
 function( Matter ){
 	return function Spellsword(dom) {
 
-		// Matter.js module aliases
-		this.Engine = Matter.Engine;
 		this.World = Matter.World;
 		this.Bodies = Matter.Bodies;
+		this.Composites = Matter.Composites;
+		this.Common = Matter.Common;
 
-		// create a Matter.js engine
+		this.Engine = Matter.Engine;
 		this.engine = this.Engine.create(dom);
 
-		// create two boxes and a ground
-		var boxA = this.Bodies.rectangle(400, 200, 80, 80);
-		var boxB = this.Bodies.rectangle(450, 50, 80, 80);
-		var boxC = this.Bodies.rectangle(500, -100, 80, 80);
-		var ground = this.Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+		var offset = 10,
+			options = { 
+				isStatic: true,
+				render: {
+					visible: false
+				}
+			};
 
-		// add all of the bodies to the world
-		this.World.add(this.engine.world, [boxA, boxB, boxC, ground]);
+		this.World.bodies = [];
+
+		// these static walls will not be rendered in this sprites example, see options
+		this.World.add(this.engine.world, [
+			this.Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
+			this.Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
+			this.Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
+			this.Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
+		]);
+
+		var t=this;
+		var stack = this.Composites.stack(20, 20, 10, 4, 0, 0, function(x, y) {
+			if (t.Common.random() > 0.35) {
+				return t.Bodies.rectangle(x, y, 64, 64, {
+					render: {
+						strokeStyle: '#ffffff',
+						sprite: {
+							texture: 'img/box.png'
+						}
+					}
+				});
+			}else{
+				return t.Bodies.circle(x, y, 46, {
+					density: 0.0005,
+					frictionAir: 0.06,
+					restitution: 0.3,
+					friction: 0.01,
+					render: {
+						sprite: {
+							texture: 'img/ball.png'
+						}
+					}
+				});
+			}
+		});
+
+		this.World.add(this.engine.world, stack);
+
+		var renderOptions = this.engine.render.options;
+		renderOptions.background = 'img/wall-bg.jpg';
+		renderOptions.showAngleIndicator = false;
+		renderOptions.wireframes = false;
 
 		this.run=function(){
 			// run the engine

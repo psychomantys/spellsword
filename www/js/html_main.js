@@ -10,6 +10,7 @@ require.config({
 		'bootstrap-combobox': 'thirdparty/bootstrap-combobox/js/bootstrap-combobox',
 		'yaap': 'thirdparty/yaap/yaap/yaap',
 		'Matter': 'thirdparty/matter.min',
+		'Mousetrap': 'thirdparty/mousetrap',
 		'Backbone': 'thirdparty/backbone'
 	},
 	shim: {
@@ -18,6 +19,9 @@ require.config({
 		},
 		'Matter': {
 			exports: 'Matter'
+		},
+		'Mousetrap': {
+			exports: 'Mousetrap'
 		},
 		'Handlebars': {
 			exports: 'Handlebars'
