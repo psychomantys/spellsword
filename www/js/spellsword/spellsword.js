@@ -84,6 +84,16 @@ function( Matter, Mousetrap){
 				y: 0
 			});
 		});
+		Mousetrap.bind('up', function(e){
+			console.log('up');
+			var bodies = t.Composite.allBodies(t.engine.world);
+			var body = bodies[10];
+			var forceMagnitude = 0.01 * body.mass;
+			t.Body.applyForce(body, { x: 0, y: 0 }, {
+				y: -(0.50 * forceMagnitude),
+				x: 0
+			});
+		});
 		this.run=function(){
 			// run the engine
 			return this.Engine.run(this.engine);
