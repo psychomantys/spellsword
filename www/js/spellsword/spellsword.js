@@ -1,11 +1,13 @@
 
-define(['Matter'],
-function( Matter ){
+define(['Matter', 'Mousetrap'],
+function( Matter, Mousetrap){
 	return function Spellsword(dom) {
 
 		this.World = Matter.World;
 		this.Bodies = Matter.Bodies;
+		this.Body = Matter.Body;
 		this.Composites = Matter.Composites;
+		this.Composite = Matter.Composite;
 		this.Common = Matter.Common;
 
 		this.Engine = Matter.Engine;
@@ -62,6 +64,26 @@ function( Matter ){
 		renderOptions.showAngleIndicator = false;
 		renderOptions.wireframes = false;
 
+		Mousetrap.bind('left', function(e){
+			console.log('left');
+			var bodies = t.Composite.allBodies(t.engine.world);
+			var body = bodies[10];
+			var forceMagnitude = 0.01 * body.mass;
+			t.Body.applyForce(body, { x: 0, y: 0 }, {
+				x: -(0.10 * forceMagnitude),
+				y: 0
+			});
+		});
+		Mousetrap.bind('right', function(e){
+			console.log('right');
+			var bodies = t.Composite.allBodies(t.engine.world);
+			var body = bodies[10];
+			var forceMagnitude = 0.01 * body.mass;
+			t.Body.applyForce(body, { x: 0, y: 0 }, {
+				x: (0.10 * forceMagnitude),
+				y: 0
+			});
+		});
 		this.run=function(){
 			// run the engine
 			return this.Engine.run(this.engine);
